@@ -4,10 +4,10 @@ const config = {
         fennec: {
             name: 'Фенек',
             views: {
-                front: 'toys/fennec-front.png',
-                left: 'toys/fennec-left.png',
-                right: 'toys/fennec-right.png',
-                back: 'toys/fennec-back.png'
+                front: '/toy-customizer/toys/fennec-front.png',
+                left: '/toy-customizer/toys/fennec-left.png',
+                right: '/toy-customizer/toys/fennec-right.png',
+                back: '/toy-customizer/toys/fennec-back.png'
             }
         }
     },
