@@ -36,6 +36,11 @@ function updateToyView() {
         поточний_шлях: mainToyImage.src
     });
     
+    // Додаємо обробку помилок завантаження зображення
+    mainToyImage.onerror = function() {
+        console.error('Помилка завантаження зображення:', newSrc);
+    };
+    
     mainToyImage.src = newSrc;
     mainToyImage.alt = currentToy.name;
 }
