@@ -9,81 +9,100 @@
             --primary-color: #ff69b4;
             --secondary-color: #f0f0f0;
             --accent-color: #ff1493;
+            --spacing: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             margin: 0;
-            padding: 20px;
+            padding: var(--spacing);
             font-family: 'Arial', sans-serif;
             background-color: #fff;
+            min-height: 100vh;
         }
 
         .container {
-            display: flex;
-            gap: 20px;
-            max-width: 1200px;
+            display: grid;
+            gap: var(--spacing);
+            max-width: 1400px;
             margin: 0 auto;
+            height: calc(100vh - 2 * var(--spacing));
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: 3fr 1fr;
+                grid-template-rows: 1fr;
+            }
         }
 
         .preview-section {
-            flex: 2;
             background: var(--secondary-color);
             border-radius: 10px;
-            padding: 20px;
-            position: relative;
+            padding: var(--spacing);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing);
+            overflow: hidden;
+        }
+
+        .toy-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .toy-view {
-            width: 100%;
-            height: 400px;
+            flex: 1;
             position: relative;
             background: white;
             border-radius: 8px;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 300px;
+            overflow: hidden;
         }
 
         .toy-image {
             max-width: 100%;
             max-height: 100%;
+            object-fit: contain;
         }
 
-        .clothing-item {
-            position: absolute;
-            pointer-events: none;
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .controls {
+        .controls, .action-buttons {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-top: 20px;
-        }
-
-        .view-btn {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid var(--primary-color);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .view-btn.active {
-            background: var(--primary-color);
-            color: white;
+            flex-wrap: wrap;
         }
 
         .items-section {
-            flex: 1;
             background: var(--secondary-color);
             border-radius: 10px;
-            padding: 20px;
+            padding: var(--spacing);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing);
+            overflow: auto;
         }
 
         .category {
-            margin-bottom: 20px;
+            flex: none;
         }
 
         .category-title {
@@ -105,6 +124,11 @@
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .item:hover {
@@ -115,43 +139,28 @@
         .item img {
             width: 100%;
             height: auto;
+            object-fit: contain;
         }
 
-        .toy-selector {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .toy-btn {
+        .toy-btn, .view-btn, .action-btn {
             padding: 8px 16px;
-            margin: 0 5px;
             background: white;
             border: 2px solid var(--primary-color);
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
-        .toy-btn.active {
+        .toy-btn.active, .view-btn.active {
             background: var(--primary-color);
             color: white;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-            justify-content: center;
         }
 
         .action-btn {
-            padding: 10px 20px;
             background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -167,13 +176,14 @@
         }
 
         #savedDesigns {
-            margin-top: 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 10px;
             padding: 10px;
             background: white;
             border-radius: 8px;
+            overflow: auto;
+            max-height: 200px;
         }
 
         .saved-design {
@@ -182,6 +192,7 @@
             padding: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            aspect-ratio: 1;
         }
 
         .saved-design:hover {
@@ -191,7 +202,48 @@
 
         .saved-design img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Стилі для мобільних пристроїв */
+        @media (max-width: 767px) {
+            .container {
+                height: auto;
+                min-height: calc(100vh - 2 * var(--spacing));
+            }
+
+            .preview-section {
+                min-height: 60vh;
+            }
+
+            .items-section {
+                max-height: none;
+            }
+
+            .toy-view {
+                min-height: 200px;
+            }
+
+            #savedDesigns {
+                max-height: 150px;
+            }
+        }
+
+        /* Стилі для маленьких екранів */
+        @media (max-width: 480px) {
+            :root {
+                --spacing: 10px;
+            }
+
+            .toy-btn, .view-btn, .action-btn {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -207,22 +259,24 @@
                 <img src="toys/toy1-front.png" alt="Іграшка" class="toy-image" id="mainToyImage">
                 <div id="clothingContainer"></div>
             </div>
-            <div class="controls">
-                <button class="view-btn active" data-view="front">Спереду</button>
-                <button class="view-btn" data-view="left">Зліва</button>
-                <button class="view-btn" data-view="right">Справа</button>
-                <button class="view-btn" data-view="back">Ззаду</button>
-            </div>
-            <div class="action-buttons">
-                <button class="action-btn" id="saveDesignBtn">
-                    <i class="fas fa-save"></i> Зберегти дизайн
-                </button>
-                <button class="action-btn" id="downloadBtn">
-                    <i class="fas fa-download"></i> Завантажити зображення
-                </button>
-                <button class="action-btn" id="shareBtn">
-                    <i class="fas fa-share"></i> Поділитися
-                </button>
+            <div class="controls-container">
+                <div class="controls">
+                    <button class="view-btn active" data-view="front">Спереду</button>
+                    <button class="view-btn" data-view="left">Зліва</button>
+                    <button class="view-btn" data-view="right">Справа</button>
+                    <button class="view-btn" data-view="back">Ззаду</button>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" id="saveDesignBtn">
+                        <i class="fas fa-save"></i> Зберегти
+                    </button>
+                    <button class="action-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> Завантажити
+                    </button>
+                    <button class="action-btn" id="shareBtn">
+                        <i class="fas fa-share"></i> Поділитися
+                    </button>
+                </div>
             </div>
             <div id="savedDesigns">
                 <!-- Тут будуть збережені дизайни -->
