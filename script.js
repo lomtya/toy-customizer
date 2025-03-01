@@ -42,6 +42,31 @@ function updateToyView() {
     mainToyImage.alt = currentToy.name;
 }
 
+// Функція для завантаження зображення
+function downloadImage() {
+    const toyView = document.querySelector('.toy-view');
+    const currentToy = config.toys[state.currentToy];
+    
+    // Створюємо елемент для завантаження
+    const link = document.createElement('a');
+    
+    // Конвертуємо div в canvas
+    html2canvas(toyView, {
+        backgroundColor: null,  // Прозорий фон
+        scale: 2  // Подвійна якість для кращої чіткості
+    }).then(canvas => {
+        // Конвертуємо canvas в URL даних
+        const image = canvas.toDataURL('image/png');
+        
+        // Налаштовуємо посилання для завантаження
+        link.href = image;
+        link.download = `${currentToy.name}-${state.currentView}.png`;
+        
+        // Симулюємо клік для завантаження
+        link.click();
+    });
+}
+
 // Ініціалізація інтерфейсу
 function initializeInterface() {
     // Обробка кнопок перегляду
@@ -71,6 +96,12 @@ function initializeInterface() {
             updateToyView();
         });
     });
+
+    // Обробка кнопки завантаження
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', downloadImage);
+    }
 
     // Оновлюємо початковий вигляд
     updateToyView();
