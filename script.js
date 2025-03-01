@@ -64,8 +64,94 @@ const config = {
 const state = {
     currentToy: 'toy1',
     currentView: 'front',
-    wornItems: new Set()
+    wornItems: new Set(),
+    savedDesigns: [] // Збережені дизайни
 };
+
+// Завантаження збережених дизайнів при старті
+function loadSavedDesigns() {
+    const saved = localStorage.getItem('savedDesigns');
+    if (saved) {
+        state.savedDesigns = JSON.parse(saved);
+        updateSavedDesignsView();
+    }
+}
+
+// Збереження дизайну
+function saveCurrentDesign() {
+    const design = {
+        id: Date.now(),
+        toy: state.currentToy,
+        items: Array.from(state.wornItems),
+        timestamp: new Date().toISOString()
+    };
+    
+    state.savedDesigns.push(design);
+    localStorage.setItem('savedDesigns', JSON.stringify(state.savedDesigns));
+    
+    // Створюємо превью
+    html2canvas(document.querySelector('.toy-view')).then(canvas => {
+        design.preview = canvas.toDataURL('image/png');
+        updateSavedDesignsView();
+    });
+}
+
+// Оновлення відображення збережених дизайнів
+function updateSavedDesignsView() {
+    const container = document.getElementById('savedDesigns');
+    container.innerHTML = '';
+    
+    state.savedDesigns.forEach(design => {
+        const div = document.createElement('div');
+        div.className = 'saved-design';
+        if (design.preview) {
+            const img = document.createElement('img');
+            img.src = design.preview;
+            div.appendChild(img);
+        }
+        div.addEventListener('click', () => loadDesign(design));
+        container.appendChild(div);
+    });
+}
+
+// Завантаження збереженого дизайну
+function loadDesign(design) {
+    state.currentToy = design.toy;
+    state.wornItems = new Set(design.items);
+    updateToyView();
+    
+    // Оновлюємо кнопки вибору іграшки
+    document.querySelectorAll('.toy-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.toy === design.toy);
+    });
+}
+
+// Завантаження зображення
+function downloadImage() {
+    html2canvas(document.querySelector('.toy-view')).then(canvas => {
+        const link = document.createElement('a');
+        link.download = `toy-design-${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+// Поділитися дизайном
+function shareDesign() {
+    html2canvas(document.querySelector('.toy-view')).then(canvas => {
+        canvas.toBlob(blob => {
+            const file = new File([blob], "toy-design.png", { type: "image/png" });
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Мій дизайн іграшки',
+                    files: [file]
+                }).catch(console.error);
+            } else {
+                downloadImage(); // Якщо share API не підтримується, просто завантажуємо
+            }
+        });
+    });
+}
 
 // DOM елементи
 const mainToyImage = document.getElementById('mainToyImage');
@@ -106,6 +192,8 @@ function initializeInterface() {
             updateToyView();
         });
     });
+    
+    loadSavedDesigns(); // Завантажуємо збережені дизайни при старті
 }
 
 // Створення елемента предмета
@@ -166,6 +254,11 @@ function updateToyView() {
         }
     });
 }
+
+// Додаємо обробники подій для нових кнопок
+document.getElementById('saveDesignBtn').addEventListener('click', saveCurrentDesign);
+document.getElementById('downloadBtn').addEventListener('click', downloadImage);
+document.getElementById('shareBtn').addEventListener('click', shareDesign);
 
 // Запуск додатку
 initializeInterface();

@@ -136,7 +136,65 @@
             background: var(--primary-color);
             color: white;
         }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .action-btn i {
+            font-size: 1.2em;
+        }
+
+        #savedDesigns {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .saved-design {
+            border: 2px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .saved-design:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .saved-design img {
+            width: 100%;
+            height: auto;
+        }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -154,6 +212,20 @@
                 <button class="view-btn" data-view="side">Збоку</button>
                 <button class="view-btn" data-view="back">Ззаду</button>
             </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="saveDesignBtn">
+                    <i class="fas fa-save"></i> Зберегти дизайн
+                </button>
+                <button class="action-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Завантажити зображення
+                </button>
+                <button class="action-btn" id="shareBtn">
+                    <i class="fas fa-share"></i> Поділитися
+                </button>
+            </div>
+            <div id="savedDesigns">
+                <!-- Тут будуть збережені дизайни -->
+            </div>
         </div>
         <div class="items-section">
             <div class="category">
@@ -170,6 +242,7 @@
             </div>
         </div>
     </div>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
