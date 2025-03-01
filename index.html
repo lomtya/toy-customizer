@@ -20,14 +20,14 @@
         }
 
         .container {
-            display: flex;
-            gap: 20px;
-            max-width: 1600px;
+            max-width: 800px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .preview-section {
-            flex: 4;
             background: var(--secondary-color);
             border-radius: 10px;
             padding: 20px;
@@ -40,23 +40,10 @@
             text-align: center;
         }
 
-        .main-content {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-        }
-
-        .toy-view-container {
-            flex: 3;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
         .toy-view {
             background: white;
             border-radius: 8px;
-            height: 600px;
+            height: 500px;
             position: relative;
             display: flex;
             justify-content: center;
@@ -78,6 +65,7 @@
             display: flex;
             justify-content: center;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .view-btn, .toy-btn {
@@ -92,53 +80,6 @@
         .view-btn.active, .toy-btn.active {
             background: var(--primary-color);
             color: white;
-        }
-
-        .items-section {
-            flex: 1;
-            background: var(--secondary-color);
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            min-width: 250px;
-        }
-
-        .category {
-            flex: 1;
-        }
-
-        .category-title {
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--accent-color);
-        }
-
-        .items-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .item {
-            background: white;
-            border-radius: 8px;
-            padding: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            aspect-ratio: 1;
-        }
-
-        .item:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .item img {
-            width: 100%;
-            height: auto;
         }
 
         .action-buttons {
@@ -170,33 +111,107 @@
             font-size: 1.2em;
         }
 
-        #savedDesigns {
+        .items-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .category {
+            background: var(--secondary-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .category-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .items-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding: 10px;
+            gap: 15px;
+        }
+
+        .item {
             background: white;
             border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            aspect-ratio: 1;
+        }
+
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #savedDesigns {
+            background: var(--secondary-color);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .saved-designs-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .saved-designs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
         }
 
         .saved-design {
-            border: 2px solid var(--secondary-color);
+            background: white;
             border-radius: 8px;
-            padding: 5px;
+            padding: 10px;
             cursor: pointer;
             transition: all 0.3s;
             aspect-ratio: 1;
         }
 
         .saved-design:hover {
-            border-color: var(--primary-color);
             transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         .saved-design img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+        }
+
+        @media (max-width: 600px) {
+            .items-grid, .saved-designs-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .action-btn {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+
+            .view-btn, .toy-btn {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -208,47 +223,48 @@
                 <button class="toy-btn active" data-toy="toy1">Іграшка 1</button>
                 <button class="toy-btn" data-toy="toy2">Іграшка 2</button>
             </div>
-            <div class="main-content">
-                <div class="toy-view-container">
-                    <div class="toy-view">
-                        <img src="toys/toy1-front.png" alt="Іграшка" class="toy-image" id="mainToyImage">
-                        <div id="clothingContainer"></div>
-                    </div>
-                    <div class="controls">
-                        <button class="view-btn active" data-view="front">Спереду</button>
-                        <button class="view-btn" data-view="left">Зліва</button>
-                        <button class="view-btn" data-view="right">Справа</button>
-                        <button class="view-btn" data-view="back">Ззаду</button>
-                    </div>
-                    <div class="action-buttons">
-                        <button class="action-btn" id="saveDesignBtn">
-                            <i class="fas fa-save"></i> Зберегти
-                        </button>
-                        <button class="action-btn" id="downloadBtn">
-                            <i class="fas fa-download"></i> Завантажити
-                        </button>
-                        <button class="action-btn" id="shareBtn">
-                            <i class="fas fa-share"></i> Поділитися
-                        </button>
-                    </div>
-                    <div id="savedDesigns">
-                        <!-- Тут будуть збережені дизайни -->
-                    </div>
+            <div class="toy-view">
+                <img src="toys/toy1-front.png" alt="Іграшка" class="toy-image" id="mainToyImage">
+                <div id="clothingContainer"></div>
+            </div>
+            <div class="controls">
+                <button class="view-btn active" data-view="front">Спереду</button>
+                <button class="view-btn" data-view="left">Зліва</button>
+                <button class="view-btn" data-view="right">Справа</button>
+                <button class="view-btn" data-view="back">Ззаду</button>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="saveDesignBtn">
+                    <i class="fas fa-save"></i> Зберегти
+                </button>
+                <button class="action-btn" id="downloadBtn">
+                    <i class="fas fa-download"></i> Завантажити
+                </button>
+                <button class="action-btn" id="shareBtn">
+                    <i class="fas fa-share"></i> Поділитися
+                </button>
+            </div>
+        </div>
+
+        <div class="items-section">
+            <div class="category">
+                <div class="category-title">Одяг</div>
+                <div class="items-grid" id="clothingItems">
+                    <!-- Буде заповнено через JavaScript -->
                 </div>
-                <div class="items-section">
-                    <div class="category">
-                        <div class="category-title">Одяг</div>
-                        <div class="items-grid" id="clothingItems">
-                            <!-- Буде заповнено через JavaScript -->
-                        </div>
-                    </div>
-                    <div class="category">
-                        <div class="category-title">Аксесуари</div>
-                        <div class="items-grid" id="accessoryItems">
-                            <!-- Буде заповнено через JavaScript -->
-                        </div>
-                    </div>
+            </div>
+            <div class="category">
+                <div class="category-title">Аксесуари</div>
+                <div class="items-grid" id="accessoryItems">
+                    <!-- Буде заповнено через JavaScript -->
                 </div>
+            </div>
+        </div>
+
+        <div id="savedDesigns">
+            <div class="saved-designs-title">Збережені дизайни</div>
+            <div class="saved-designs-grid">
+                <!-- Буде заповнено через JavaScript -->
             </div>
         </div>
     </div>
