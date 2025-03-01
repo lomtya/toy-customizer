@@ -19,12 +19,9 @@ const config = {
 const state = {
     currentToy: 'fennec',
     currentView: 'front',
-    wornItems: new Set()
+    activeClothing: [],
+    activeAccessories: []
 };
-
-// DOM елементи
-const mainToyImage = document.getElementById('mainToyImage');
-const clothingContainer = document.getElementById('clothingContainer');
 
 // Оновлення вигляду іграшки
 function updateToyView() {
@@ -32,11 +29,11 @@ function updateToyView() {
     const newSrc = currentToy.views[state.currentView];
     console.log('Оновлення вигляду:', {
         поточний_вигляд: state.currentView,
-        новий_шлях: newSrc,
-        поточний_шлях: mainToyImage.src
+        новий_шлях: newSrc
     });
     
     // Додаємо обробку помилок завантаження зображення
+    const mainToyImage = document.getElementById('mainToyImage');
     mainToyImage.onerror = function() {
         console.error('Помилка завантаження зображення:', newSrc);
     };
@@ -47,26 +44,40 @@ function updateToyView() {
 
 // Ініціалізація інтерфейсу
 function initializeInterface() {
-    // Обробники подій для кнопок вигляду
-    document.querySelectorAll('.view-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const view = btn.dataset.view;
-            console.log('Натиснута кнопка:', {
-                вигляд: view,
-                поточний: state.currentView
-            });
+    // Обробка кнопок перегляду
+    document.querySelectorAll('.view-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            // Видаляємо активний клас з усіх кнопок
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            // Додаємо активний клас до натиснутої кнопки
+            this.classList.add('active');
             
-            document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            state.currentView = view;
+            // Оновлюємо стан і вигляд
+            state.currentView = this.dataset.view;
             updateToyView();
         });
     });
+
+    // Обробка кнопок іграшок
+    document.querySelectorAll('.toy-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            // Видаляємо активний клас з усіх кнопок
+            document.querySelectorAll('.toy-btn').forEach(btn => btn.classList.remove('active'));
+            // Додаємо активний клас до натиснутої кнопки
+            this.classList.add('active');
+            
+            // Оновлюємо стан і вигляд
+            state.currentToy = this.dataset.toy;
+            updateToyView();
+        });
+    });
+
+    // Оновлюємо початковий вигляд
+    updateToyView();
 }
 
 // Ініціалізуємо інтерфейс при завантаженні
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Сторінка завантажена');
     initializeInterface();
-    updateToyView();
 });
