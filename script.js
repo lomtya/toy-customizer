@@ -5,7 +5,8 @@ const config = {
             name: 'Іграшка 1',
             views: {
                 front: 'toys/toy1-front.png',
-                side: 'toys/toy1-side.png',
+                left: 'toys/toy1-left.png',
+                right: 'toys/toy1-right.png',
                 back: 'toys/toy1-back.png'
             }
         },
@@ -13,7 +14,8 @@ const config = {
             name: 'Іграшка 2',
             views: {
                 front: 'toys/toy2-front.png',
-                side: 'toys/toy2-side.png',
+                left: 'toys/toy2-left.png',
+                right: 'toys/toy2-right.png',
                 back: 'toys/toy2-back.png'
             }
         }
@@ -26,12 +28,14 @@ const config = {
             positions: {
                 toy1: {
                     front: { top: '30%', left: '30%' },
-                    side: { top: '30%', left: '30%' },
+                    left: { top: '30%', left: '30%' },
+                    right: { top: '30%', left: '30%' },
                     back: { top: '30%', left: '30%' }
                 },
                 toy2: {
                     front: { top: '32%', left: '32%' },
-                    side: { top: '32%', left: '32%' },
+                    left: { top: '32%', left: '32%' },
+                    right: { top: '32%', left: '32%' },
                     back: { top: '32%', left: '32%' }
                 }
             }
@@ -46,12 +50,14 @@ const config = {
             positions: {
                 toy1: {
                     front: { top: '10%', left: '45%' },
-                    side: { top: '10%', left: '45%' },
+                    left: { top: '10%', left: '45%' },
+                    right: { top: '10%', left: '45%' },
                     back: { top: '10%', left: '45%' }
                 },
                 toy2: {
                     front: { top: '12%', left: '47%' },
-                    side: { top: '12%', left: '47%' },
+                    left: { top: '12%', left: '47%' },
+                    right: { top: '12%', left: '47%' },
                     back: { top: '12%', left: '47%' }
                 }
             }
