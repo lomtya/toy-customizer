@@ -4,10 +4,10 @@ const config = {
         fennec: {
             name: 'Фенек',
             views: {
-                front: './toys/fennec-front.png',
-                left: './toys/fennec-left.png',
-                right: './toys/fennec-right.png',
-                back: './toys/fennec-back.png'
+                front: '/toy-customizer/toys/fennec-front.png',
+                left: '/toy-customizer/toys/fennec-left.png',
+                right: '/toy-customizer/toys/fennec-right.png',
+                back: '/toy-customizer/toys/fennec-back.png'
             }
         }
     },
@@ -28,9 +28,15 @@ const clothingContainer = document.getElementById('clothingContainer');
 
 // Оновлення вигляду іграшки
 function updateToyView() {
-    console.log('Оновлення вигляду:', state.currentView);
     const currentToy = config.toys[state.currentToy];
-    mainToyImage.src = currentToy.views[state.currentView];
+    const newSrc = currentToy.views[state.currentView];
+    console.log('Оновлення вигляду:', {
+        поточний_вигляд: state.currentView,
+        новий_шлях: newSrc,
+        поточний_шлях: mainToyImage.src
+    });
+    
+    mainToyImage.src = newSrc;
     mainToyImage.alt = currentToy.name;
 }
 
@@ -39,9 +45,15 @@ function initializeInterface() {
     // Обробники подій для кнопок вигляду
     document.querySelectorAll('.view-btn').forEach(btn => {
         btn.addEventListener('click', () => {
+            const view = btn.dataset.view;
+            console.log('Натиснута кнопка:', {
+                вигляд: view,
+                поточний: state.currentView
+            });
+            
             document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            state.currentView = btn.dataset.view;
+            state.currentView = view;
             updateToyView();
         });
     });
