@@ -9,67 +9,58 @@
             --primary-color: #ff69b4;
             --secondary-color: #f0f0f0;
             --accent-color: #ff1493;
-            --spacing: 20px;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
             margin: 0;
-            padding: var(--spacing);
+            padding: 20px;
             font-family: 'Arial', sans-serif;
             background-color: #fff;
             min-height: 100vh;
         }
 
         .container {
-            display: grid;
-            gap: var(--spacing);
-            max-width: 1400px;
+            display: flex;
+            gap: 20px;
+            max-width: 1600px;
             margin: 0 auto;
-            height: calc(100vh - 2 * var(--spacing));
-            grid-template-columns: 1fr;
-            grid-template-rows: auto 1fr;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                grid-template-columns: 3fr 1fr;
-                grid-template-rows: 1fr;
-            }
         }
 
         .preview-section {
+            flex: 4;
             background: var(--secondary-color);
             border-radius: 10px;
-            padding: var(--spacing);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: var(--spacing);
-            overflow: hidden;
+            gap: 20px;
         }
 
         .toy-selector {
+            text-align: center;
+        }
+
+        .main-content {
             display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .toy-view-container {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
         .toy-view {
-            flex: 1;
-            position: relative;
             background: white;
             border-radius: 8px;
+            height: 600px;
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 300px;
-            overflow: hidden;
         }
 
         .toy-image {
@@ -78,31 +69,44 @@
             object-fit: contain;
         }
 
-        .controls-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .clothing-item {
+            position: absolute;
+            pointer-events: none;
         }
 
-        .controls, .action-buttons {
+        .controls {
             display: flex;
             justify-content: center;
             gap: 10px;
-            flex-wrap: wrap;
+        }
+
+        .view-btn, .toy-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active, .toy-btn.active {
+            background: var(--primary-color);
+            color: white;
         }
 
         .items-section {
+            flex: 1;
             background: var(--secondary-color);
             border-radius: 10px;
-            padding: var(--spacing);
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: var(--spacing);
-            overflow: auto;
+            gap: 20px;
+            min-width: 250px;
         }
 
         .category {
-            flex: none;
+            flex: 1;
         }
 
         .category-title {
@@ -113,7 +117,7 @@
 
         .items-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
         }
 
@@ -125,10 +129,6 @@
             transition: all 0.3s;
             text-align: center;
             aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .item:hover {
@@ -139,28 +139,23 @@
         .item img {
             width: 100%;
             height: auto;
-            object-fit: contain;
         }
 
-        .toy-btn, .view-btn, .action-btn {
-            padding: 8px 16px;
-            background: white;
-            border: 2px solid var(--primary-color);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            white-space: nowrap;
-        }
-
-        .toy-btn.active, .view-btn.active {
-            background: var(--primary-color);
-            color: white;
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
+            padding: 10px 20px;
             background: var(--primary-color);
             color: white;
             border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -177,13 +172,11 @@
 
         #savedDesigns {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
             padding: 10px;
             background: white;
             border-radius: 8px;
-            overflow: auto;
-            max-height: 200px;
         }
 
         .saved-design {
@@ -205,46 +198,6 @@
             height: 100%;
             object-fit: contain;
         }
-
-        /* Стилі для мобільних пристроїв */
-        @media (max-width: 767px) {
-            .container {
-                height: auto;
-                min-height: calc(100vh - 2 * var(--spacing));
-            }
-
-            .preview-section {
-                min-height: 60vh;
-            }
-
-            .items-section {
-                max-height: none;
-            }
-
-            .toy-view {
-                min-height: 200px;
-            }
-
-            #savedDesigns {
-                max-height: 150px;
-            }
-        }
-
-        /* Стилі для маленьких екранів */
-        @media (max-width: 480px) {
-            :root {
-                --spacing: 10px;
-            }
-
-            .toy-btn, .view-btn, .action-btn {
-                padding: 6px 12px;
-                font-size: 0.9em;
-            }
-
-            .items-grid {
-                grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            }
-        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -255,44 +208,46 @@
                 <button class="toy-btn active" data-toy="toy1">Іграшка 1</button>
                 <button class="toy-btn" data-toy="toy2">Іграшка 2</button>
             </div>
-            <div class="toy-view">
-                <img src="toys/toy1-front.png" alt="Іграшка" class="toy-image" id="mainToyImage">
-                <div id="clothingContainer"></div>
-            </div>
-            <div class="controls-container">
-                <div class="controls">
-                    <button class="view-btn active" data-view="front">Спереду</button>
-                    <button class="view-btn" data-view="left">Зліва</button>
-                    <button class="view-btn" data-view="right">Справа</button>
-                    <button class="view-btn" data-view="back">Ззаду</button>
+            <div class="main-content">
+                <div class="toy-view-container">
+                    <div class="toy-view">
+                        <img src="toys/toy1-front.png" alt="Іграшка" class="toy-image" id="mainToyImage">
+                        <div id="clothingContainer"></div>
+                    </div>
+                    <div class="controls">
+                        <button class="view-btn active" data-view="front">Спереду</button>
+                        <button class="view-btn" data-view="left">Зліва</button>
+                        <button class="view-btn" data-view="right">Справа</button>
+                        <button class="view-btn" data-view="back">Ззаду</button>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn" id="saveDesignBtn">
+                            <i class="fas fa-save"></i> Зберегти
+                        </button>
+                        <button class="action-btn" id="downloadBtn">
+                            <i class="fas fa-download"></i> Завантажити
+                        </button>
+                        <button class="action-btn" id="shareBtn">
+                            <i class="fas fa-share"></i> Поділитися
+                        </button>
+                    </div>
+                    <div id="savedDesigns">
+                        <!-- Тут будуть збережені дизайни -->
+                    </div>
                 </div>
-                <div class="action-buttons">
-                    <button class="action-btn" id="saveDesignBtn">
-                        <i class="fas fa-save"></i> Зберегти
-                    </button>
-                    <button class="action-btn" id="downloadBtn">
-                        <i class="fas fa-download"></i> Завантажити
-                    </button>
-                    <button class="action-btn" id="shareBtn">
-                        <i class="fas fa-share"></i> Поділитися
-                    </button>
-                </div>
-            </div>
-            <div id="savedDesigns">
-                <!-- Тут будуть збережені дизайни -->
-            </div>
-        </div>
-        <div class="items-section">
-            <div class="category">
-                <div class="category-title">Одяг</div>
-                <div class="items-grid" id="clothingItems">
-                    <!-- Буде заповнено через JavaScript -->
-                </div>
-            </div>
-            <div class="category">
-                <div class="category-title">Аксесуари</div>
-                <div class="items-grid" id="accessoryItems">
-                    <!-- Буде заповнено через JavaScript -->
+                <div class="items-section">
+                    <div class="category">
+                        <div class="category-title">Одяг</div>
+                        <div class="items-grid" id="clothingItems">
+                            <!-- Буде заповнено через JavaScript -->
+                        </div>
+                    </div>
+                    <div class="category">
+                        <div class="category-title">Аксесуари</div>
+                        <div class="items-grid" id="accessoryItems">
+                            <!-- Буде заповнено через JavaScript -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
